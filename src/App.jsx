@@ -111,7 +111,7 @@ function App() {
       <div className="">
         {location.city && (
           <p>
-            You selected {location.city}, {location.state},{location.country}
+            You selected {location.city}, {location.state}, {location.country}
           </p>
         )}
       </div>
