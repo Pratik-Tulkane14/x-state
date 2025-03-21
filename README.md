@@ -64,3 +64,8 @@ useEffect(() => {
 Fix: Update the useEffect handling city reset
 
 Fix these changes and make sure to go through the test file also for a better understanding
+
+
+here in the input fields you have to make sure that all are not disabled instead you should not show the data as per the API data, https://country-flag-13str7ite-yash-pandeys-projects-ccfbfb1c.vercel.app/ check this link you will get to know about the issue, when we select the first field then only the next field can be removed from disable option
+also please check the spec.cy.js file it has all the test codes which are basically the requirements
+moreover you can check the context over here: https://ctxt.io/2/AAB4K1W-Ew
