@@ -39,7 +39,13 @@ function App() {
       try {
         const result = await fetch(`${BASE_URL}/countries`);
         const jsonResult = await result.json();
-        setCountries(jsonResult);
+        const filterArray = jsonResult.filter((item)=>{
+          return (
+            item.toLowerCase()!=="india"
+          )
+        })
+        filterArray.push("India");
+        setCountries(filterArray);
       } catch (err) {
         console.log("Failed to fetch country data : ", err.message);
       }
