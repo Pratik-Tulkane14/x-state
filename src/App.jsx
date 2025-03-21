@@ -17,6 +17,7 @@ function App() {
       const jsonResult = await result.json();
       setStates(jsonResult);
     } catch (err) {
+            setStates("");
       console.log("Failed to fetch country data : ", err.message);
     }
   };
@@ -50,10 +51,10 @@ function App() {
     }
   }, [selectedCountry]);
   useEffect(() => {
-    if (selectedState) {
+    if (selectedCountry && selectedState) {
       getCities();
     }
-  }, [selectedState]);
+  }, [selectedCountry, selectedState]);
   return (
     <div className="container">
       <div className="">
