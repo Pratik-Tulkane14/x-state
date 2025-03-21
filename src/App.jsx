@@ -8,7 +8,7 @@ function App() {
     city: "",
   });
   const [countries, setCountries] = useState([]);
-  const [state, setState] = useState([]);
+  const [stateList, setStateList] = useState([]);
   const [city, setCity] = useState([]);
   const getStates = async () => {
     try {
@@ -17,7 +17,7 @@ function App() {
       );
 
       const jsonResult = await result.json();
-      setState(jsonResult);
+      setStateList(jsonResult);
     } catch (err) {
       console.log(err);
     }
@@ -89,7 +89,7 @@ function App() {
           }
         >
           <option>Select State</option>
-          {state.map((item) => {
+          {stateList.map((item) => {
             return <option key={item}>{item}</option>;
           })}
         </select>
@@ -110,9 +110,9 @@ function App() {
       </div>
       <div className="">
         {location.city && (
-          <p>
+          <h3>
             You selected {location.city}, {location.state}, {location.country}
-          </p>
+          </h3>
         )}
       </div>
     </div>
