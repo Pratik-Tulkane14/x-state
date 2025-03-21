@@ -72,6 +72,7 @@ function App() {
         <select
           name="country"
           id="country"
+          className="dropdown"
           value={location.country}
           onChange={(e) =>
             setLocation((prev) => ({ ...prev, country: e.target.value }))
@@ -85,6 +86,7 @@ function App() {
         <select
           name="state"
           id="state"
+          className="dropdown"
           // disabled={location.country === ""}
           value={location.state}
           onChange={(e) =>
@@ -99,6 +101,7 @@ function App() {
         <select
           name="city"
           id="city"
+          className="dropdown"
           // disabled={location.state === ""}
           value={location.city}
           onChange={(e) =>

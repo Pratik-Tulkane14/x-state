@@ -12,6 +12,11 @@
 }
 .wrapper{
   display: flex;
+  gap: 2rem;
   justify-content: center;
   align-items: center;
+}
+.dropdown{
+  height: 2rem;
+  width: 16rem;
 }
