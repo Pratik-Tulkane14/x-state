@@ -19,7 +19,7 @@ function App() {
       const jsonResult = await result.json();
       setStateList(jsonResult);
     } catch (err) {
-      console.log(err);
+      console.log("Failed to fetch country data : ", err.message);
     }
   };
   const getCities = async () => {
@@ -39,18 +39,12 @@ function App() {
       try {
         const result = await fetch(`${BASE_URL}/countries`);
         const jsonResult = await result.json();
-        // const res = jsonResult.filter((item) => {
-        //   return item.toLowerCase() !== "india";
-        // });
-        // res.push("India");
         setCountries(jsonResult);
       } catch (err) {
-        console.log(err);
+        console.log("Failed to fetch country data : ", err.message);
       }
     };
     getCountries();
-    setLocation((prev) => ({ ...prev, state: "" }));
-    setLocation((prev) => ({ ...prev, city: "" }));
   }, []);
   useEffect(() => {
     if (location.country !== "") {
@@ -59,10 +53,10 @@ function App() {
     }
   }, [location.country]);
   useEffect(() => {
-    if (location.state !== "") {
+    if (location.state !=="") {
       getCities();
     }
-  }, [location.state]);
+  }, [ location.state]);
   return (
     <div className="container">
       <div className="">
@@ -75,10 +69,17 @@ function App() {
           className="dropdown"
           value={location.country}
           onChange={(e) =>
-            setLocation((prev) => ({ ...prev, country: e.target.value }))
+            setLocation((prev) => ({
+              ...prev,
+              country: e.target.value,
+              stateList: "",
+              city: "",
+            }))
           }
         >
-          <option>Select Country</option>
+          <option value="" disabled>
+            Select Country
+          </option>
           {countries.map((item) => {
             return <option key={item}>{item}</option>;
           })}
@@ -90,10 +91,16 @@ function App() {
           // disabled={location.country === ""}
           value={location.state}
           onChange={(e) =>
-            setLocation((prev) => ({ ...prev, state: e.target.value }))
+            setLocation((prev) => ({
+              ...prev,
+              state: e.target.value,
+              setCity: "",
+            }))
           }
         >
-          <option>Select State</option>
+          <option value="" disabled>
+            Select State
+          </option>
           {stateList.map((item) => {
             return <option key={item}>{item}</option>;
           })}
@@ -108,7 +115,9 @@ function App() {
             setLocation((prev) => ({ ...prev, city: e.target.value }))
           }
         >
-          <option>Select City</option>
+          <option value="" disabled>
+            Select City
+          </option>
           {city.map((item) => {
             return <option key={item}>{item}</option>;
           })}
