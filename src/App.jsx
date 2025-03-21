@@ -39,11 +39,11 @@ function App() {
       try {
         const result = await fetch(`${BASE_URL}/countries`);
         const jsonResult = await result.json();
-        const res = jsonResult.filter((item) => {
-          return item.toLowerCase() !== "india";
-        });
-        res.push("India");
-        setCountries(res);
+        // const res = jsonResult.filter((item) => {
+        //   return item.toLowerCase() !== "india";
+        // });
+        // res.push("India");
+        setCountries(jsonResult);
       } catch (err) {
         console.log(err);
       }
