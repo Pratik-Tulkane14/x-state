@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="container">
       <div className="">
-        <h6>Select Location</h6>
+        <h1>Select Location</h1>
       </div>
       <div className="wrapper">
         <select
