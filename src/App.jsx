@@ -2,22 +2,20 @@ import { useEffect, useState } from "react";
 import "./App.css";
 const BASE_URL = "https://crio-location-selector.onrender.com";
 function App() {
-  const [location, setLocation] = useState({
-    country: "",
-    state: "",
-    city: "",
-  });
   const [countries, setCountries] = useState([]);
-  const [stateList, setStateList] = useState([]);
+  const [states, setStates] = useState([]);
   const [city, setCity] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   const getStates = async () => {
     try {
       const result = await fetch(
-        `${BASE_URL}/country=${location.country}/states`
+        `${BASE_URL}/country=${selectedCountry}/states`
       );
 
       const jsonResult = await result.json();
-      setStateList(jsonResult);
+      setStates(jsonResult);
     } catch (err) {
       console.log("Failed to fetch country data : ", err.message);
     }
@@ -25,7 +23,7 @@ function App() {
   const getCities = async () => {
     try {
       const result = await fetch(
-        `${BASE_URL}/country=${location.country}/state=${location.state}/cities`
+        `${BASE_URL}/country=${selectedCountry}/state=${selectedState}/cities`
       );
 
       const jsonResult = await result.json();
@@ -39,12 +37,6 @@ function App() {
       try {
         const result = await fetch(`${BASE_URL}/countries`);
         const jsonResult = await result.json();
-        // const filterArray = jsonResult.filter((item)=>{
-        //   return (
-        //     item.toLowerCase()!=="india"
-        //   )
-        // })
-        // filterArray.push("India");
         setCountries(jsonResult);
       } catch (err) {
         console.log("Failed to fetch country data : ", err.message);
@@ -53,16 +45,15 @@ function App() {
     getCountries();
   }, []);
   useEffect(() => {
-    if (location.country !== "") {
+    if (selectedCountry !== "") {
       getStates();
-      setLocation((prev) => ({ ...prev, city: "" }));
     }
-  }, [location.country]);
+  }, [selectedCountry]);
   useEffect(() => {
-    if (location.state !=="") {
+    if (selectedState) {
       getCities();
     }
-  }, [ location.state]);
+  }, [selectedState]);
   return (
     <div className="container">
       <div className="">
@@ -73,15 +64,12 @@ function App() {
           name="country"
           id="country"
           className="dropdown"
-          value={location.country}
-          onChange={(e) =>
-            setLocation((prev) => ({
-              ...prev,
-              country: e.target.value,
-              stateList: "",
-              city: "",
-            }))
-          }
+          value={selectedCountry}
+          onChange={(e) => {
+            setSelectedCountry(e.target.value);
+            setSelectedState("");
+            setSelectedCity("");
+          }}
         >
           <option value="" disabled>
             Select Country
@@ -94,20 +82,16 @@ function App() {
           name="state"
           id="state"
           className="dropdown"
-          // disabled={location.country === ""}
-          value={location.state}
-          onChange={(e) =>
-            setLocation((prev) => ({
-              ...prev,
-              state: e.target.value,
-              setCity: "",
-            }))
-          }
+          value={selectedState}
+          onChange={(e) => {
+            setSelectedState(e.target.value);
+            setSelectedCity("");
+          }}
         >
           <option value="" disabled>
             Select State
           </option>
-          {stateList.map((item) => {
+          {states.map((item) => {
             return <option key={item}>{item}</option>;
           })}
         </select>
@@ -116,10 +100,8 @@ function App() {
           id="city"
           className="dropdown"
           // disabled={location.state === ""}
-          value={location.city}
-          onChange={(e) =>
-            setLocation((prev) => ({ ...prev, city: e.target.value }))
-          }
+          value={selectedCity}
+          onChange={(e) => setSelectedCity(e.target.value)}
         >
           <option value="" disabled>
             Select City
@@ -130,9 +112,9 @@ function App() {
         </select>
       </div>
       <div className="">
-        {location.city && (
+        {selectedCity && (
           <h3>
-            You selected {location.city}, {location.state}, {location.country}
+            You selected {selectedCity}, {selectedState}, {selectedCountry}
           </h3>
         )}
       </div>
