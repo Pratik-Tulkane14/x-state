@@ -38,21 +38,24 @@ function App() {
     const getCountries = async () => {
       try {
         const result = await fetch(`${BASE_URL}/countries`);
-
         const jsonResult = await result.json();
-        setCountries(jsonResult);
+        const res = jsonResult.filter((item) => {
+          return item.toLowerCase() !== "india";
+        });
+        res.push("India");
+        setCountries(res);
       } catch (err) {
         console.log(err);
       }
     };
     getCountries();
-    setLocation((prev)=>({...prev , state:""}));
-    setLocation((prev)=>({...prev , city:""}));
+    setLocation((prev) => ({ ...prev, state: "" }));
+    setLocation((prev) => ({ ...prev, city: "" }));
   }, []);
   useEffect(() => {
     if (location.country !== "") {
       getStates();
-      setLocation((prev)=>({...prev, city:""}))
+      setLocation((prev) => ({ ...prev, city: "" }));
     }
   }, [location.country]);
   useEffect(() => {
